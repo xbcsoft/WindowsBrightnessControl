@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html window-frame="transparent">
+<head>
+    <meta charset="UTF-8">
+    <title>显示器亮度调节</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- 初始即为露头状态，避免第一次显示时暴露完整的缓存表面。 -->
+    <div id="flyout">
+        <!-- 顶部标题栏（点击展开/收起设备选择列表） -->
+        <div id="header">
+            <span id="header-title">正在检测显示器...</span>
+            <svg id="header-chevron" viewBox="0 0 24 24">
+                <polyline points="18 15 12 9 6 15"></polyline>
+            </svg>
+        </div>
+
+        <!-- 调光模式与显示器列表 -->
+        <div id="device-list-container">
+            <div id="device-list">
+                <!-- 动态渲染设备列表项 -->
+            </div>
+        </div>
+
+        <!-- 底部滑块控制行 -->
+        <div id="slider-row">
+            <!-- 亮度太阳图标 -->
+            <svg id="brightness-icon" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="4"></circle>
+                <line x1="12" y1="2" x2="12" y2="4"></line>
+                <line x1="12" y1="20" x2="12" y2="22"></line>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                <line x1="1" y1="12" x2="3" y2="12"></line>
+                <line x1="21" y1="12" x2="23" y2="12"></line>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+
+            <!-- 滑动条 -->
+            <div id="slider-box">
+                <div id="slider-track"></div>
+                <div id="slider-fill"></div>
+                <div id="slider-thumb"></div>
+            </div>
+
+            <!-- 亮度数值 -->
+            <span id="brightness-label">50</span>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

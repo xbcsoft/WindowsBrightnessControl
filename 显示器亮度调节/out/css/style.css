@@ -1,0 +1,277 @@
+:root {
+    --accent-color: #5c166d;
+    --accent-surface: rgba(92, 22, 109, 0.70);
+    --accent-hover: rgba(255, 255, 255, 0.12);
+    --accent-active: rgba(255, 255, 255, 0.22);
+    --accent-selected: rgba(0, 0, 0, 0.28);
+    --text-color: #ffffff;
+    --text-dim: rgba(255, 255, 255, 0.75);
+    --track-bg: rgba(255, 255, 255, 0.35);
+    --track-fill: #a01892;
+    --thumb-bg: #a01892;
+    --shadow-color: rgba(0, 0, 0, 0.45);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    user-select: none;
+    font-family: "Segoe UI", "Microsoft YaHei", sans-serif;
+}
+
+html {
+    background: transparent;
+    overflow: hidden;
+}
+
+body {
+    /* 飞出卡片本身贴靠任务栏，不能保留透明外边距。 */
+    margin: 0;
+    background: transparent;
+    overflow: hidden;
+	 
+}
+
+/* 主卡片容器 */
+#flyout {
+    width: *;
+    /* DWM 亚克力在窗口底层合成；此处必须保留 alpha，不能使用不透明主题色。 */
+    background: var(--accent-surface);
+    border-radius: 2px;
+    box-shadow: 0 4px 16px var(--shadow-color), inset 0 0 0 1px rgba(255, 255, 255, 0.15);
+    overflow: hidden;
+    color: var(--text-color);
+    flow: vertical;
+    transition: background 0.2s ease;
+}
+
+/* 顶部标题栏 / 展开切换栏 */
+#header {
+    width: *;
+    height: 40px;
+    flow: horizontal;
+    content-vertical-align: middle;
+    padding: 0 14px;
+    cursor: default;
+    behavior: clickable;
+    transition: background 0.12s ease;
+}
+
+#header:hover {
+    background: var(--accent-hover);
+}
+
+#header:active {
+    background: var(--accent-active);
+}
+
+#flyout.no-devices #header-chevron,
+#flyout.no-devices #slider-row {
+    display: none;
+}
+
+#header-title {
+	/* Sciter 横向 flow 中的 span 必须显式成为块级弹性项，否则文本宽度会被压成 0。 */
+	display: block;
+    width: 1*;
+	height: 40px;
+	line-height: 40px;
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--text-color);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#header-chevron {
+    width: 16px;
+    height: 16px;
+    fill: none;
+    stroke: var(--text-color);
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 展开状态下箭头翻转 */
+#flyout.expanded #header-chevron {
+    transform: rotate(180deg);
+}
+
+/* 设备 / 模式列表容器 */
+#device-list-container {
+    width: *;
+    height: 0px;
+    opacity: 0;
+    visibility: hidden;
+    overflow: hidden;
+    background: rgba(0, 0, 0, 0.10);
+    border-top: 1px solid rgba(255, 255, 255, 0.10);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+    transition: height 0.22s cubic-bezier(0.1, 0.9, 0.2, 1), opacity 0.18s ease;
+}
+
+#flyout.expanded #device-list-container {
+    height: 128px;
+    opacity: 1;
+    visibility: visible;
+}
+
+#device-list {
+    width: *;
+    max-height: 160px;
+    overflow-y: auto;
+    flow: vertical;
+}
+
+/* 列表项 */
+.device-item {
+    width: *;
+    height: 42px;
+    flow: horizontal;
+    content-vertical-align: middle;
+    padding: 0 14px;
+    cursor: default;
+    behavior: clickable;
+    border-left: 3px solid transparent;
+    transition: background 0.12s ease, border-color 0.12s ease;
+}
+
+.device-item:hover {
+    background: var(--accent-hover);
+}
+
+.device-item:active {
+    background: var(--accent-active);
+}
+
+.device-item.selected {
+    background: var(--accent-selected);
+    border-left: 3px solid #ffffff;
+    font-weight: 600;
+}
+
+.device-icon {
+    width: 18px;
+    height: 18px;
+    margin-right: 10px;
+    fill: none;
+    stroke: var(--text-color);
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.device-info {
+    width: 1*;
+    flow: vertical;
+}
+
+.device-name {
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--text-color);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.device-type {
+    font-size: 10px;
+    font-weight: 400;
+    color: var(--text-dim);
+    margin-top: 1px;
+}
+
+.device-val {
+    font-size: 13px;
+    color: var(--text-dim);
+    min-width: 32px;
+    text-align: right;
+}
+
+/* 底部滑块控制行 */
+#slider-row {
+    width: *;
+    height: 60px;
+    flow: horizontal;
+    content-vertical-align: middle;
+    /* 对齐系统音量弹窗：左侧图标约 24px，右侧保留 14px。 */
+    padding: 0 18px 0 18px;
+}
+
+#brightness-icon {
+    width: 22px;
+    height: 22px;
+    margin-right: 20px;
+    fill: none;
+    stroke: var(--text-color);
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* 自定义平滑滑块 */
+#slider-box {
+    width: 1*;
+    height: 28px;
+    position: relative;
+    cursor: default;
+}
+
+#slider-track {
+    width: *;
+    height: 4px;
+    background: var(--track-bg);
+    border-radius: 2px;
+    position: absolute;
+    left: 0;
+    top: 12px;
+}
+
+#slider-fill {
+    height: 4px;
+    background: var(--track-fill);
+    border-radius: 2px;
+    position: absolute;
+    left: 0;
+    top: 12px;
+    width: 50%;
+}
+
+#slider-thumb {
+    width: 7px;
+    height: 20px;
+    background: var(--thumb-bg);
+    border-radius: 4px;
+    position: absolute;
+    top: 4px;
+    left: 50%;
+    margin-left: -3.5px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+    transition: transform 0.08s ease, background 0.12s ease;
+}
+
+#slider-box:hover #slider-thumb {
+    transform: scale(1.15);
+    background: #ffffff;
+}
+
+#slider-box:active #slider-thumb {
+    transform: scale(1.25);
+    background: #ffffff;
+}
+
+/* 亮度数值文字 */
+#brightness-label {
+    min-width: 40px;
+    text-align: right;
+    font-size: 26px;
+    font-weight: 400;
+    color: var(--text-color);
+    margin-left: 8px;
+    line-height: 28px;
+}
